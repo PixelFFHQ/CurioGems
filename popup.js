@@ -34,12 +34,14 @@ function showToast(message, isError = false) {
 }
 
 function buildPopupItem(item) {
+  const primaryText = itemLabel(item);
+  const secondaryText = item.type === 'person' ? `@${item.handle}` : item.type === 'search' ? item.query : 'Latest posts';
   const button = el('button', { className: 'popup-item', type: 'button' });
   button.append(
     el('span', { className: 'item-type-icon', text: typeBadge(item) }),
     el('span', { className: 'item-main' },
-      el('span', { className: 'item-title', text: itemLabel(item) }),
-      el('span', { className: 'item-subtitle', text: item.type === 'person' ? `@${item.handle}` : item.type === 'search' ? item.query : 'Latest posts' })
+      el('span', { className: 'item-title', text: primaryText, attrs: { title: primaryText } }),
+      el('span', { className: 'item-subtitle', text: secondaryText, attrs: { title: secondaryText } })
     )
   );
   if (item.favorite) {

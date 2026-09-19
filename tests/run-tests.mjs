@@ -136,6 +136,7 @@ const testDir = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(testDir, '..');
 const popupHtml = await readFile(resolve(rootDir, 'popup.html'), 'utf8');
 const popupJs = await readFile(resolve(rootDir, 'popup.js'), 'utf8');
+const popupCss = await readFile(resolve(rootDir, 'popup.css'), 'utf8');
 const manifest = JSON.parse(await readFile(resolve(rootDir, 'manifest.json'), 'utf8'));
 
 for (const id of [
@@ -150,7 +151,7 @@ assert.doesNotMatch(popupJs, /openDashboard\(['"]\?add=1/, 'popup Add must not l
 assert.deepEqual(manifest.permissions, ['storage'], 'v1.1.0 should keep only storage permission');
 assert.equal(manifest.host_permissions, undefined, 'v1.1.0 should not request host permissions');
 assert.equal(manifest.content_scripts, undefined, 'v1.1.0 should not inject content scripts');
-assert.equal(manifest.version, '1.1.0');
+assert.equal(manifest.version, '1.1.1');
 assert.equal(manifest.name, 'CurioGems');
 
 for (const relativePath of [
@@ -160,3 +161,8 @@ for (const relativePath of [
 ]) {
   await access(resolve(rootDir, relativePath));
 }
+
+assert.match(popupCss, /\.popup-content\s*\{[^}]*overflow-x:\s*hidden/s, 'popup content should suppress horizontal scrolling');
+assert.match(popupCss, /\.popup-item \.item-main\s*\{[^}]*display:\s*flex[^}]*gap:\s*6px/s, 'popup item text should have visible spacing');
+assert.match(popupCss, /\.popup-item \.item-subtitle\s*\{[^}]*flex:\s*1 1 auto/s, 'popup secondary text should have a shrinkable flex region');
+assert.match(popupJs, /title:\s*secondaryText/, 'popup should preserve full secondary text in a hover tooltip');

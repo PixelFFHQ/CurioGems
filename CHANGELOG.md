@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1 — Popup readability fix
+
+- Added clear spacing between popup item titles and secondary text.
+- Long search queries now truncate with an ellipsis instead of forcing horizontal scrolling.
+- Full title/query text remains available via the native hover tooltip.
+- Prevented horizontal scrolling in the popup content area.
+
 ## 1.1.0 — CurioGems rebrand
 
 - Renamed Writer Radar to **CurioGems**.

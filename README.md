@@ -56,14 +56,14 @@ See [PRIVACY.md](PRIVACY.md) for the full privacy summary.
 
 There is no build step.
 
-1. Extract `CurioGems_v1.1.0.zip` somewhere you will keep it.
+1. Extract `CurioGems_v1.1.1.zip` somewhere you will keep it.
 2. Open your browser's extensions page.
    - Opera GX: `opera:extensions`
    - Chrome: `chrome://extensions`
    - Edge: `edge://extensions`
 3. Enable **Developer mode**.
 4. Choose **Load unpacked**.
-5. Select the `CurioGems_v1.1.0` folder that directly contains `manifest.json`.
+5. Select the `CurioGems_v1.1.1` folder that directly contains `manifest.json`.
 6. Pin CurioGems to the toolbar if you want quick access.
 7. Click the CurioGems icon to open the compact popup.
 8. Use the ↗ button for the full dashboard.
@@ -151,7 +151,7 @@ Existing valid local data is never replaced by the starter set.
 ## Project structure
 
 ```text
-CurioGems_v1.1.0/
+CurioGems_v1.1.1/
 ├─ manifest.json
 ├─ popup.html
 ├─ popup.css

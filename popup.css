@@ -4,7 +4,7 @@ html, body { width: 400px; min-height: 520px; }
 .popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .compact-search { height: 42px; }
 .popup-meta { display: flex; align-items: center; justify-content: space-between; padding: 10px 2px 7px; color: var(--muted-2); font-size: 11px; }
-.popup-content { flex: 1; min-height: 330px; overflow-y: auto; padding-right: 2px; scrollbar-width: thin; scrollbar-color: #303640 transparent; }
+.popup-content { flex: 1; min-height: 330px; overflow-y: auto; overflow-x: hidden; padding-right: 2px; scrollbar-width: thin; scrollbar-color: #303640 transparent; }
 .popup-section { margin-top: 12px; }
 .popup-section:first-child { margin-top: 3px; }
 .popup-section-title { display: flex; align-items: center; gap: 7px; margin: 0 2px 6px; color: var(--muted-2); font-size: 10px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
@@ -12,6 +12,14 @@ html, body { width: 400px; min-height: 520px; }
 .popup-item { display: flex; align-items: center; gap: 9px; width: 100%; padding: 8px 9px; margin-bottom: 4px; border: 1px solid transparent; border-radius: 10px; background: transparent; cursor: pointer; text-align: left; }
 .popup-item:hover { border-color: var(--line-soft); background: #171b20; }
 .popup-item .item-type-icon { width: 28px; height: 28px; font-size: 12px; }
+.popup-item .item-main { display: flex; align-items: baseline; gap: 6px; min-width: 0; overflow: hidden; }
+.popup-item .item-title,
+.popup-item .item-subtitle { display: block; min-width: 0; margin-top: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.popup-item .item-title { flex: 0 0 auto; max-width: 72%; }
+.popup-item .item-subtitle { flex: 1 1 0; }
+.popup-item .item-type-icon,
+.popup-item .favorite-star,
+.popup-item .open-arrow { flex: 0 0 auto; }
 .popup-item .open-arrow { color: #56616e; }
 .popup-item:hover .open-arrow { color: var(--cyan); }
 .popup-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; margin-top: 10px; border-top: 1px solid var(--line-soft); color: var(--muted-2); font-size: 10px; }

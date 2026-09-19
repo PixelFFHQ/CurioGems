@@ -1,6 +1,6 @@
 // Kept for in-place upgrades from Writer Radar so existing local data survives the rebrand.
 export const STORAGE_KEY = 'writerRadarData';
-export const APP_VERSION = '1.1.0';
+export const APP_VERSION = '1.1.1';
 export const SCHEMA_VERSION = 1;
 
 const STARTER_CATEGORY_DEFS = [
