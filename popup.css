@@ -1,0 +1,55 @@
+html, body { width: 400px; min-height: 520px; }
+.popup-page { background: radial-gradient(circle at 82% 0%, rgba(169,140,245,.07), transparent 31%), var(--bg); }
+.popup-shell { display: flex; flex-direction: column; min-height: 520px; padding: 15px; }
+.popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.compact-search { height: 42px; }
+.popup-meta { display: flex; align-items: center; justify-content: space-between; padding: 10px 2px 7px; color: var(--muted-2); font-size: 11px; }
+.popup-content { flex: 1; min-height: 330px; overflow-y: auto; padding-right: 2px; scrollbar-width: thin; scrollbar-color: #303640 transparent; }
+.popup-section { margin-top: 12px; }
+.popup-section:first-child { margin-top: 3px; }
+.popup-section-title { display: flex; align-items: center; gap: 7px; margin: 0 2px 6px; color: var(--muted-2); font-size: 10px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+.popup-section-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--category-color, var(--cyan)); }
+.popup-item { display: flex; align-items: center; gap: 9px; width: 100%; padding: 8px 9px; margin-bottom: 4px; border: 1px solid transparent; border-radius: 10px; background: transparent; cursor: pointer; text-align: left; }
+.popup-item:hover { border-color: var(--line-soft); background: #171b20; }
+.popup-item .item-type-icon { width: 28px; height: 28px; font-size: 12px; }
+.popup-item .open-arrow { color: #56616e; }
+.popup-item:hover .open-arrow { color: var(--cyan); }
+.popup-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; margin-top: 10px; border-top: 1px solid var(--line-soft); color: var(--muted-2); font-size: 10px; }
+.popup-footer .text-button { font-size: 11px; }
+.popup-content .empty-state { margin-top: 18px; }
+
+
+/* Quick Add stays entirely inside the extension popup. */
+.popup-add-dialog {
+  width: calc(100% - 22px);
+  max-width: 378px;
+  max-height: calc(100vh - 20px);
+  border-color: #36404a;
+}
+.popup-add-dialog > form { padding: 16px; }
+.popup-add-dialog > form > * + * { margin-top: 11px; }
+.popup-add-dialog .dialog-header h2 { font-size: 20px; }
+.popup-add-dialog .eyebrow { margin-bottom: 5px; }
+.popup-add-dialog .icon-button { width: 31px; height: 31px; }
+.popup-type-picker { gap: 5px; }
+.popup-type-picker span { padding: 8px 5px; font-size: 11px; }
+.popup-add-dialog .field { gap: 4px; }
+.popup-add-dialog .field > span { font-size: 11px; }
+.popup-add-dialog .field input:not([type="color"]),
+.popup-add-dialog .field select,
+.popup-add-dialog .field textarea { padding: 8px 9px; border-radius: 9px; font-size: 12px; }
+.popup-add-dialog .field textarea { min-height: 54px; max-height: 100px; }
+.popup-profile-url-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: center; }
+.popup-profile-url-row .secondary-button { min-height: 35px; padding: 7px 9px; white-space: nowrap; font-size: 11px; }
+.field-hint { display: block; color: var(--muted-2); font-size: 9px; line-height: 1.4; }
+.field-hint.is-error { color: #ff9ca4; }
+.field-hint.is-success { color: #8bd8b1; }
+.popup-form-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; align-items: end; }
+.popup-pin-field { min-height: 35px; white-space: nowrap; font-size: 11px; }
+.popup-dialog-actions { padding-top: 4px; }
+.popup-dialog-actions .secondary-button,
+.popup-dialog-actions .primary-button { padding: 8px 11px; font-size: 12px; }
+.popup-add-dialog .form-error { min-height: 15px; margin-top: 4px; margin-bottom: -2px; font-size: 10px; }
+.popup-toast-region { position: fixed; z-index: 1200; left: 50%; bottom: 13px; transform: translateX(-50%); pointer-events: none; }
+.popup-toast { min-width: 170px; padding: 8px 11px; border: 1px solid #35404a; border-radius: 9px; background: #20252c; color: var(--text); box-shadow: 0 10px 28px rgba(0,0,0,.38); font-size: 11px; text-align: center; }
+.popup-toast.error { border-color: #75434a; color: #ffd2d6; }

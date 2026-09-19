@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CurioGems</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body class="popup-page">
+  <main class="popup-shell" aria-labelledby="app-title">
+    <header class="popup-header">
+      <div class="brand-lockup">
+        <img class="brand-mark" src="icons/icon128.png" alt="" aria-hidden="true">
+        <div>
+          <h1 id="app-title">CurioGems</h1>
+          <p>Keep the gems worth revisiting.</p>
+        </div>
+      </div>
+      <button id="openDashboardBtn" class="icon-button" type="button" title="Open full dashboard" aria-label="Open full dashboard">↗</button>
+    </header>
+
+    <label class="search-box compact-search">
+      <span aria-hidden="true">⌕</span>
+      <input id="quickSearch" type="search" placeholder="Search saved gems…" autocomplete="off" aria-label="Search CurioGems">
+      <kbd>/</kbd>
+    </label>
+
+    <div class="popup-meta">
+      <span id="itemCount">0 saved</span>
+      <button id="quickAddBtn" class="text-button" type="button">+ Add</button>
+    </div>
+
+    <section id="popupContent" class="popup-content" aria-live="polite"></section>
+
+    <footer class="popup-footer">
+      <span><span class="status-dot"></span> Local only</span>
+      <button id="manageBtn" class="text-button" type="button">Manage & settings</button>
+    </footer>
+  </main>
+
+  <dialog id="quickAddDialog" class="app-dialog popup-add-dialog">
+    <form id="quickAddForm" method="dialog" novalidate>
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow">NEW GEM</p>
+          <h2>Add a gem</h2>
+        </div>
+        <button id="quickAddCloseBtn" class="icon-button dialog-close" type="button" aria-label="Close">×</button>
+      </div>
+
+      <fieldset class="type-picker popup-type-picker">
+        <legend>Type</legend>
+        <label><input type="radio" name="quickItemType" value="hashtag" checked><span># Hashtag</span></label>
+        <label><input type="radio" name="quickItemType" value="search"><span>⌕ Search</span></label>
+        <label><input type="radio" name="quickItemType" value="person"><span>@ Person</span></label>
+      </fieldset>
+
+      <div id="quickHashtagFields" class="type-fields">
+        <label class="field"><span>Hashtag</span><input id="quickHashtagInput" type="text" maxlength="80" placeholder="#IndieDev" autocomplete="off"></label>
+      </div>
+
+      <div id="quickSearchFields" class="type-fields is-hidden">
+        <label class="field"><span>Display name</span><input id="quickSearchNameInput" type="text" maxlength="100" placeholder="Creative tools" autocomplete="off"></label>
+        <label class="field"><span>X search query</span><input id="quickSearchQueryInput" type="text" maxlength="500" placeholder='"creative tools"' autocomplete="off"></label>
+      </div>
+
+      <div id="quickPersonFields" class="type-fields is-hidden">
+        <div class="field">
+          <span>Paste X profile URL <small>optional helper</small></span>
+          <div class="popup-profile-url-row">
+            <input id="quickPersonProfileUrlInput" type="text" maxlength="500" inputmode="url" placeholder="https://x.com/SomeCreator" aria-describedby="quickPersonUrlStatus" autocomplete="off">
+            <button id="quickExtractHandleBtn" class="secondary-button" type="button">Use URL</button>
+          </div>
+          <small id="quickPersonUrlStatus" class="field-hint">Local only: the handle is extracted from what you paste. CurioGems does not read X.</small>
+        </div>
+        <label class="field"><span>Display name</span><input id="quickPersonNameInput" type="text" maxlength="100" placeholder="Optional display name" autocomplete="off"></label>
+        <label class="field"><span>X handle</span><input id="quickPersonHandleInput" type="text" maxlength="50" placeholder="@SomeCreator" autocomplete="off"></label>
+      </div>
+
+      <div class="popup-form-grid">
+        <label class="field"><span>Category</span><select id="quickItemCategory"></select></label>
+        <label class="check-field popup-pin-field"><input id="quickItemFavorite" type="checkbox"><span>★ Pin</span></label>
+      </div>
+
+      <label class="field"><span>Note <small>optional</small></span><textarea id="quickItemNote" maxlength="1000" rows="2" placeholder="Why did this catch your eye?"></textarea></label>
+      <p id="quickAddError" class="form-error" role="alert"></p>
+
+      <div class="dialog-actions popup-dialog-actions">
+        <button id="quickAddCancelBtn" class="secondary-button" type="button">Cancel</button>
+        <button class="primary-button" type="submit">Save gem</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="popupToastRegion" class="popup-toast-region" aria-live="polite"></div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

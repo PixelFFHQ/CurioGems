@@ -1,0 +1,26 @@
+# CurioGems user backups can contain private saved people, notes, and searches.
+curiogems-backup-*.json
+*curiogems*backup*.json
+
+# Secrets / local configuration
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Packaged extension artifacts
+*.crx
+*.xpi
+*.zip
+web-ext-artifacts/
+dist/
+
+# Dependency / editor / OS clutter
+node_modules/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CurioGems</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="dashboard-page">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand-lockup sidebar-brand">
+        <img class="brand-mark" src="icons/icon128.png" alt="" aria-hidden="true">
+        <div>
+          <h1>CurioGems</h1>
+          <p>Keep the gems worth revisiting.</p>
+        </div>
+      </div>
+
+      <nav class="side-nav" aria-label="CurioGems sections">
+        <button class="nav-item is-active" data-view="radar" type="button"><span>◆</span> My Gems</button>
+        <button class="nav-item" data-view="pinned" type="button"><span>★</span> Pinned</button>
+        <button class="nav-item" data-view="recent" type="button"><span>◷</span> Recent</button>
+      </nav>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label-row">
+          <span>Categories</span>
+          <button id="manageCategoriesShortcut" class="mini-icon-button" type="button" title="Manage categories" aria-label="Manage categories">⚙</button>
+        </div>
+        <div id="categoryNav" class="category-nav"></div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="privacy-chip"><span class="status-dot"></span> Stored on this browser</div>
+        <button id="settingsNavBtn" class="nav-item" type="button"><span>⚙</span> Settings</button>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <label class="search-box dashboard-search">
+          <span aria-hidden="true">⌕</span>
+          <input id="globalSearch" type="search" placeholder="Search hashtags, searches, people, notes…" autocomplete="off" aria-label="Search CurioGems">
+          <kbd>/</kbd>
+        </label>
+        <button id="addItemBtn" class="primary-button" type="button">+ Add gem</button>
+      </header>
+
+      <div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+      <section id="radarView" class="view-panel">
+        <div class="hero-row">
+          <div>
+            <p class="eyebrow">LOCAL • PRIVATE • MANUAL</p>
+            <h2>Your saved gems</h2>
+            <p class="view-subtitle">Keep the useful corners of X within reach, without turning your extension into a tiny surveillance drone.</p>
+          </div>
+          <div id="summaryStats" class="summary-stats"></div>
+        </div>
+        <div id="radarContent" class="radar-content"></div>
+      </section>
+
+      <section id="settingsView" class="view-panel is-hidden" aria-labelledby="settingsTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">PREFERENCES & BACKUP</p>
+            <h2 id="settingsTitle">Settings</h2>
+            <p class="view-subtitle">Everything here stays inside CurioGems unless you explicitly export a backup file.</p>
+          </div>
+        </div>
+
+        <div class="settings-grid">
+          <article class="settings-card">
+            <h3>Opening X links</h3>
+            <p>Choose what happens when you click a hashtag, search, or person.</p>
+            <div class="segmented" role="group" aria-label="Open X links preference">
+              <button id="openNewTabSetting" data-open-mode="new" type="button">New tab</button>
+              <button id="openCurrentTabSetting" data-open-mode="current" type="button">Current tab</button>
+            </div>
+          </article>
+
+          <article class="settings-card">
+            <h3>Categories</h3>
+            <p>Create, rename, recolor, reorder, or delete your organizational buckets.</p>
+            <button id="manageCategoriesBtn" class="secondary-button" type="button">Manage categories</button>
+          </article>
+
+          <article class="settings-card backup-card">
+            <h3>Backup & restore</h3>
+            <p>Export a readable JSON backup, or import one after CurioGems validates it first.</p>
+            <div class="button-row">
+              <button id="exportBtn" class="secondary-button" type="button">Export JSON</button>
+              <label class="secondary-button file-button">Import JSON<input id="importInput" type="file" accept="application/json,.json"></label>
+            </div>
+            <p class="fine-print">Import never changes your saved data until you choose Merge or Replace in the preview.</p>
+          </article>
+
+          <article class="settings-card">
+            <h3>Privacy boundary</h3>
+            <ul class="privacy-list">
+              <li>No X API or OAuth</li>
+              <li>No content scripts or DOM inspection</li>
+              <li>No analytics, telemetry, or remote storage</li>
+              <li>Only ordinary official X links are opened</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="itemDialog" class="app-dialog">
+    <form id="itemForm" method="dialog" novalidate>
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow">GEM ENTRY</p>
+          <h2 id="itemDialogTitle">Add a gem</h2>
+        </div>
+        <button class="icon-button dialog-close" type="button" data-close-dialog="itemDialog" aria-label="Close">×</button>
+      </div>
+
+      <input id="itemId" type="hidden">
+      <fieldset class="type-picker">
+        <legend>Type</legend>
+        <label><input type="radio" name="itemType" value="hashtag" checked><span># Hashtag</span></label>
+        <label><input type="radio" name="itemType" value="search"><span>⌕ Search</span></label>
+        <label><input type="radio" name="itemType" value="person"><span>@ Person</span></label>
+      </fieldset>
+
+      <div id="hashtagFields" class="type-fields">
+        <label class="field"><span>Hashtag</span><input id="hashtagInput" type="text" maxlength="80" placeholder="#IndieDev"></label>
+      </div>
+
+      <div id="searchFields" class="type-fields is-hidden">
+        <label class="field"><span>Display name</span><input id="searchNameInput" type="text" maxlength="100" placeholder="Creative tools"></label>
+        <label class="field"><span>X search query</span><input id="searchQueryInput" type="text" maxlength="500" placeholder='"creative tools"'></label>
+      </div>
+
+      <div id="personFields" class="type-fields is-hidden">
+        <div class="field">
+          <span>Paste X profile URL <small>optional helper</small></span>
+          <div class="profile-url-row">
+            <input id="personProfileUrlInput" type="text" maxlength="500" inputmode="url" placeholder="https://x.com/SomeCreator" aria-describedby="personUrlStatus">
+            <button id="extractHandleBtn" class="secondary-button" type="button">Use URL</button>
+          </div>
+          <small id="personUrlStatus" class="field-hint">Local only: CurioGems extracts the handle from the pasted URL and does not read X.</small>
+        </div>
+        <label class="field"><span>Display name</span><input id="personNameInput" type="text" maxlength="100" placeholder="Optional display name"></label>
+        <label class="field"><span>X handle</span><input id="personHandleInput" type="text" maxlength="50" placeholder="@SomeCreator"></label>
+      </div>
+
+      <div class="form-grid">
+        <label class="field"><span>Category</span><select id="itemCategory"></select></label>
+        <label class="check-field"><input id="itemFavorite" type="checkbox"><span>★ Pin this entry</span></label>
+      </div>
+      <label class="field"><span>Note <small>optional</small></span><textarea id="itemNote" maxlength="1000" rows="3" placeholder="Why did this catch your eye?"></textarea></label>
+      <p id="itemFormError" class="form-error" role="alert"></p>
+
+      <div class="dialog-actions">
+        <button class="secondary-button" type="button" data-close-dialog="itemDialog">Cancel</button>
+        <button class="primary-button" type="submit">Save gem</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="categoryDialog" class="app-dialog wide-dialog">
+    <div class="dialog-header">
+      <div><p class="eyebrow">ORGANIZE</p><h2>Manage categories</h2></div>
+      <button class="icon-button dialog-close" type="button" data-close-dialog="categoryDialog" aria-label="Close">×</button>
+    </div>
+    <div id="categoryManager" class="category-manager"></div>
+    <form id="newCategoryForm" class="new-category-form">
+      <label class="field grow"><span>New category</span><input id="newCategoryName" type="text" maxlength="60" placeholder="e.g. Research"></label>
+      <label class="field compact-field"><span>Icon</span><input id="newCategoryIcon" type="text" maxlength="2" value="◇" aria-label="Category icon"></label>
+      <label class="field compact-field"><span>Color</span><input id="newCategoryColor" type="color" value="#55cbd3" aria-label="Category color"></label>
+      <button class="primary-button align-end" type="submit">Add</button>
+    </form>
+    <p id="categoryFormError" class="form-error" role="alert"></p>
+  </dialog>
+
+  <dialog id="confirmDialog" class="app-dialog confirm-dialog">
+    <div class="dialog-header">
+      <div><p class="eyebrow">CONFIRM</p><h2 id="confirmTitle">Are you sure?</h2></div>
+    </div>
+    <p id="confirmMessage" class="confirm-message"></p>
+    <div class="dialog-actions">
+      <button id="confirmCancelBtn" class="secondary-button" type="button">Cancel</button>
+      <button id="confirmAcceptBtn" class="danger-button" type="button">Delete</button>
+    </div>
+  </dialog>
+
+  <dialog id="importDialog" class="app-dialog wide-dialog">
+    <div class="dialog-header">
+      <div><p class="eyebrow">IMPORT PREVIEW</p><h2>Backup validated</h2></div>
+      <button class="icon-button dialog-close" type="button" data-close-dialog="importDialog" aria-label="Close">×</button>
+    </div>
+    <div id="importPreview" class="import-preview"></div>
+    <div class="import-warning">Replace completely swaps your current CurioGems data for the backup. Merge keeps your existing entries and adds non-duplicates.</div>
+    <div class="dialog-actions split-actions">
+      <button id="importCancelBtn" class="secondary-button" type="button">Cancel</button>
+      <div class="button-row">
+        <button id="importReplaceBtn" class="danger-outline-button" type="button">Replace existing</button>
+        <button id="importMergeBtn" class="primary-button" type="button">Merge safely</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
