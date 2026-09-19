@@ -148,9 +148,9 @@ for (const id of [
   assert.match(popupJs, new RegExp(id), `popup JS should wire #${id}`);
 }
 assert.doesNotMatch(popupJs, /openDashboard\(['"]\?add=1/, 'popup Add must not launch the dashboard add route');
-assert.deepEqual(manifest.permissions, ['storage'], 'v1.1.0 should keep only storage permission');
-assert.equal(manifest.host_permissions, undefined, 'v1.1.0 should not request host permissions');
-assert.equal(manifest.content_scripts, undefined, 'v1.1.0 should not inject content scripts');
+assert.deepEqual(manifest.permissions, ['storage'], 'v1.1.1 should keep only storage permission');
+assert.equal(manifest.host_permissions, undefined, 'v1.1.1 should not request host permissions');
+assert.equal(manifest.content_scripts, undefined, 'v1.1.1 should not inject content scripts');
 assert.equal(manifest.version, '1.1.1');
 assert.equal(manifest.name, 'CurioGems');
 
@@ -164,5 +164,5 @@ for (const relativePath of [
 
 assert.match(popupCss, /\.popup-content\s*\{[^}]*overflow-x:\s*hidden/s, 'popup content should suppress horizontal scrolling');
 assert.match(popupCss, /\.popup-item \.item-main\s*\{[^}]*display:\s*flex[^}]*gap:\s*6px/s, 'popup item text should have visible spacing');
-assert.match(popupCss, /\.popup-item \.item-subtitle\s*\{[^}]*flex:\s*1 1 auto/s, 'popup secondary text should have a shrinkable flex region');
+assert.match(popupCss, /\.popup-item \.item-subtitle\s*\{[^}]*flex:\s*1 1 0/s, 'popup secondary text should yield space before the title');
 assert.match(popupJs, /title:\s*secondaryText/, 'popup should preserve full secondary text in a hover tooltip');
