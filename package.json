@@ -2,6 +2,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/run-tests.mjs"
+    "test": "node tests/run-tests.mjs",
+    "prepare:firefox": "node scripts/prepare-firefox.mjs",
+    "build:firefox": "python scripts/package-firefox.py"
   }
 }

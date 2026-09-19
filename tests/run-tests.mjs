@@ -164,5 +164,46 @@ for (const relativePath of [
 
 assert.match(popupCss, /\.popup-content\s*\{[^}]*overflow-x:\s*hidden/s, 'popup content should suppress horizontal scrolling');
 assert.match(popupCss, /\.popup-item \.item-main\s*\{[^}]*display:\s*flex[^}]*gap:\s*6px/s, 'popup item text should have visible spacing');
-assert.match(popupCss, /\.popup-item \.item-subtitle\s*\{[^}]*flex:\s*1 1 0/s, 'popup secondary text should yield space before the title');
+assert.match(popupCss, /\.popup-item \.item-title\s*\{[^}]*flex:\s*0 0 auto[^}]*max-width:\s*72%/s, 'popup title should keep its natural width unless it becomes unusually long');
+assert.match(popupCss, /\.popup-item \.item-subtitle\s*\{[^}]*flex:\s*1 1 0/s, 'popup secondary text should truncate before the title');
 assert.match(popupJs, /title:\s*secondaryText/, 'popup should preserve full secondary text in a hover tooltip');
+
+
+// Firefox packaging checks. The Firefox build uses the same runtime files with Gecko-only manifest metadata.
+const { execFileSync } = await import('node:child_process');
+execFileSync(process.execPath, [resolve(rootDir, 'scripts', 'prepare-firefox.mjs')], { cwd: rootDir, stdio: 'pipe' });
+
+const firefoxDir = resolve(rootDir, 'dist', 'firefox');
+const firefoxManifest = JSON.parse(await readFile(resolve(firefoxDir, 'manifest.json'), 'utf8'));
+assert.equal(firefoxManifest.version, manifest.version, 'Firefox build should use the same app version');
+assert.deepEqual(firefoxManifest.permissions, ['storage'], 'Firefox build should keep only storage permission');
+assert.equal(firefoxManifest.host_permissions, undefined, 'Firefox build should not request host permissions');
+assert.equal(firefoxManifest.content_scripts, undefined, 'Firefox build should not inject content scripts');
+assert.equal(firefoxManifest.browser_specific_settings?.gecko?.id, 'curiogems@pixelff.com', 'Firefox build should use the stable Gecko ID');
+assert.deepEqual(
+  firefoxManifest.browser_specific_settings?.gecko?.data_collection_permissions?.required,
+  ['none'],
+  'Firefox build should declare that it does not collect/transmit data outside the extension'
+);
+
+for (const relativePath of [
+  'LICENSE',
+  'dashboard.css',
+  'dashboard.html',
+  'dashboard.js',
+  'data.js',
+  'manifest.json',
+  'popup.css',
+  'popup.html',
+  'popup.js',
+  'styles.css',
+  'ui.js',
+  'icons/icon16.png',
+  'icons/icon32.png',
+  'icons/icon48.png',
+  'icons/icon128.png'
+]) {
+  await access(resolve(firefoxDir, relativePath));
+}
+
+console.log('Firefox packaging checks passed.');

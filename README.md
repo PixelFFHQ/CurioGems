@@ -2,7 +2,7 @@
 
 **Keep the gems worth revisiting.**
 
-CurioGems is a private, local-first Chromium browser extension for organizing X hashtags, reusable searches, and people you choose to save.
+CurioGems is a private, local-first browser extension for organizing X hashtags, reusable searches, and people you choose to save.
 
 It is intentionally **not** an X client. CurioGems does not read X, inspect pages, scrape posts, monitor your timeline, access followers, log into your account, or use the X API. X is only the destination for ordinary links that you explicitly open.
 
@@ -181,9 +181,13 @@ There is no framework, external CDN, build pipeline, content script, background 
 
 ## Browser compatibility
 
-CurioGems is built first for current Chromium-based desktop browsers. The same Chromium package is intended for Opera GX / Opera, Google Chrome, Microsoft Edge, Brave, Vivaldi, and other current Chromium browsers that support Manifest V3 extensions.
+CurioGems supports current Chromium-based desktop browsers and Firefox.
 
-Firefox implements the WebExtensions APIs CurioGems relies on, but publishing a Manifest V3 build through Firefox Add-ons requires Firefox-specific manifest metadata. Safari also requires conversion and packaging as a Safari Web Extension. Those browser-store packages are not part of this Chromium release.
+The Chromium package is intended for Opera GX / Opera, Google Chrome, Microsoft Edge, Brave, Vivaldi, and other current Chromium browsers that support Manifest V3 extensions.
+
+Firefox uses the same CurioGems runtime code with Firefox-specific Manifest V3 metadata added at packaging time. The Firefox build has been functionally tested in Firefox; public AMO availability is tracked separately from source compatibility.
+
+Safari is not a supported distribution target.
 
 ## Developer test
 
@@ -193,7 +197,31 @@ With Node.js installed:
 npm test
 ```
 
-The tests cover starter-data validation, first-run storage behavior, URL encoding, X profile URL parsing, legacy backup compatibility, malformed import rejection, export/import round-tripping, duplicate-safe merging, tab-opening behavior, entry reordering, popup Quick Add integration, manifest permissions, and referenced assets.
+The tests cover starter-data validation, first-run storage behavior, URL encoding, X profile URL parsing, legacy backup compatibility, malformed import rejection, export/import round-tripping, duplicate-safe merging, tab-opening behavior, entry reordering, popup Quick Add integration, manifest permissions, referenced assets, and Firefox-specific manifest generation.
+
+## Build the Firefox package
+
+CurioGems keeps one runtime codebase. Firefox-specific metadata is generated into `dist/firefox` so the root Chromium manifest remains unchanged.
+
+Prepare the Firefox source tree:
+
+```text
+npm run prepare:firefox
+```
+
+Create the AMO-ready ZIP on Windows with Python 3 installed:
+
+```text
+npm run build:firefox
+```
+
+The package is written to:
+
+```text
+dist/firefox-artifacts/CurioGems-Firefox-v<version>.zip
+```
+
+The generated Firefox manifest uses the stable Gecko ID `curiogems@pixelff.com` and declares `data_collection_permissions.required` as `none`. The generated `dist/` directory is ignored by Git.
 
 ## Version 1 boundary
 

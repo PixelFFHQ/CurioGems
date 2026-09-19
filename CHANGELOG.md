@@ -6,6 +6,7 @@
 - Long search queries now truncate with an ellipsis instead of forcing horizontal scrolling.
 - Full title/query text remains available via the native hover tooltip.
 - Prevented horizontal scrolling in the popup content area.
+- Added repeatable Firefox packaging with Firefox-specific Manifest V3 metadata while keeping the same runtime code and permissions.
 
 ## 1.1.0 — CurioGems rebrand
 
