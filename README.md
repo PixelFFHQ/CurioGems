@@ -173,11 +173,14 @@ CurioGems_v1.1.1/
 │  ├─ icon32.png
 │  ├─ icon48.png
 │  └─ icon128.png
+├─ scripts/
+│  ├─ prepare-firefox.mjs
+│  └─ package-firefox.py
 └─ tests/
    └─ run-tests.mjs
 ```
 
-There is no framework, external CDN, build pipeline, content script, background service worker, or remote dependency.
+There is no framework, external CDN, runtime bundler, compile step, content script, background service worker, or remote dependency. Firefox packaging is handled by the small local scripts in `scripts/`.
 
 ## Browser compatibility
 
