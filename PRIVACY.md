@@ -23,7 +23,7 @@ CurioGems also stores limited local usage metadata needed for its own features, 
 - how many times a saved gem has been opened
 - the last time a saved gem was opened
 
-This data remains in your browser using `chrome.storage.local`.
+This data remains in your browser using the browser extension's local storage (`storage.local`).
 
 There is no account system, analytics, telemetry, advertising SDK, remote database, or cloud sync built into the extension.
 
@@ -54,7 +54,7 @@ The optional **Paste X profile URL** helper processes the text you paste locally
 
 ## Permissions
 
-CurioGems requests only the Chromium `storage` permission.
+CurioGems requests only the browser extension `storage` permission.
 
 It does not request host permissions, `tabs`, `activeTab`, `scripting`, browsing history, cookies, or access to all websites.
 
